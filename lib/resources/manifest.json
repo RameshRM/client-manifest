@@ -1,4 +1,8 @@
 {
 	"helloworld": "http://localhost:5555/v1/helloworld",
-	"helloworldv2": "http://localhost:5555/v2/helloworld"
+	"helloworldV2": "http://localhost:5555/v2/helloworld",
+	"foo": "http://api.com/v1/foo",
+	"fooV2": "http://api.com/v2/foo",
+	"foobar": "http://api.com/v2/bar",
+	"bar": "http://api.com/v2/foo-bar"
 }
