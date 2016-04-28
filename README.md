@@ -36,3 +36,13 @@ cd client-manifest
 npm install
 node .
 ```
+
+## Test
+
+1. Open your browser and type http://localhost:55909/
+
+> You can see the API Manifest in the payload
+
+2. Open your browser and type http://localhost:55909/?v=1
+
+> Server detects invalid version and alerts.
