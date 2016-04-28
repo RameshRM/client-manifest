@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Client Manifest</title>
+  <style media="screen">
+    body {
+      font-family: arial;
+      margin: 0px;
+    }
+
+    pre {
+      background-color: lightyellow;
+      max-width: 90%;
+      max-height: 500px;
+      overflow: auto;
+      font-size: 1em;
+      border: solid 1px #aaa;
+      border-radius: 3px;
+      padding: 1em;
+    }
+
+    .alert {
+      padding: 1em;
+      background-color: lightcoral;
+      border: solid 1px;
+      border-radius: 1px;
+      color: white;
+      margin: 0px;
+      display:none;
+    }
+  </style>
+</head>
+
+<body>
+  <h1 id="alert" class='alert'>Incompatible version found</h1>
+  <pre class="" id='manifest'>
+
+  </pre>
+  <script type="text/javascript">
+    (function(root) {
+      var oReq = new XMLHttpRequest();
+      oReq.addEventListener("load", reqListener);
+      oReq.open("GET", "http://localhost:55909/manifest");
+      oReq.send();
+
+      function reqListener() {
+        var result = JSON.parse(this.responseText);
+        document.getElementById('manifest').innerHTML = JSON.stringify(result, null, 2);
+        sendBeacon(result.version);
+      }
+
+      function sendBeacon(version) {
+        var $img = document.createElement('img');
+        $img.id = 'img_beacon1';
+        var queryVersion = getQueryStringValue('version') || '';
+        $img.src = 'http://localhost:55909/beacon?v=' + version + queryVersion;
+        document.body.appendChild($img);
+        setTimeout(checkVersion.bind(null, $img), 10);
+      }
+
+      function checkVersion(beaconRef) {
+        var $beacon = beaconRef;
+        var $alert = document.getElementById('alert');
+        if ($beacon.width === 1 && $beacon.height === 1) {
+          $alert.style.display = 'none';
+          return;
+        }
+        $alert.style.display = 'inline';
+      }
+
+      function getQueryStringValue(key) {
+        return unescape(window.location.search.replace(new RegExp("^(?:.*[&\\?]" + escape(key).replace(/[\.\+\*]/g, "\\$&") + "(?:\\=([^&]*))?)?.*$", "i"), "$1"));
+      }
+
+    }).call(this, window);
+
+    (function(_root) {
+      _root.sendBeacon = function() {
+        var $img = document.createElement('img');
+        $img.src = 'http://localhost:55909/beacon';
+        document.body.appendChild($img);
+      }
+    }).call(this, window);
+  </script>
+
+</body>
+
+</html>

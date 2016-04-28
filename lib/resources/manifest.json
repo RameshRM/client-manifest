@@ -1,0 +1,4 @@
+{
+	"helloworld": "http://localhost:5555/v1/helloworld",
+	"helloworldv2": "http://localhost:5555/v2/helloworld"
+}

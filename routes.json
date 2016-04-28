@@ -1,0 +1,10 @@
+[{
+	"path": "GET /manifest",
+	"handler": "require:./lib/manifest"
+}, {
+	"path": "GET /beacon",
+	"handler": "require:./lib/beacon"
+}, {
+	"path": "GET /",
+	"handler": "require:./lib/"
+}]
